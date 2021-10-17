@@ -20,47 +20,57 @@ class _MessScreen extends State<MessScreen> {
   }
 
   initData() {
-    listStory.add(UserStory(name: 'Huyen', url: 'images/user1.jpg'));
+    listStory.add(UserStory(name: 'Huyền', url: 'images/user1.jpg'));
     listStory.add(UserStory(name: 'Linh', url: 'images/user2.jpg'));
-    listStory.add(UserStory(name: 'Huong', url: 'images/user3.jpg'));
-    listStory.add(UserStory(name: 'Quynh', url: 'images/user4.jpg'));
+    listStory.add(UserStory(name: 'Hương', url: 'images/user3.jpg'));
+    listStory.add(UserStory(name: 'Quỳnh', url: 'images/user4.jpg'));
     listStory.add(UserStory(name: 'Nga', url: 'images/user5.jpg'));
-    listStory.add(UserStory(name: 'Trang', url: 'images/user6.jpg'));
+    listStory.add(UserStory(name: 'Vân', url: 'images/user6.jpg'));
     listChat.add(ChatUser(
-        name: 'Thuy Linh',
+        name: 'Thùy Linh',
         url: 'images/user4.jpg',
-        chat: 'Hello bro',
+        chat: 'Hôm qua MU thua 4-2',
         time: '7m'));
     listChat.add(ChatUser(
-        name: 'Nhu Quynh',
+        name: 'Như Quỳnh',
         url: 'images/user3.jpg',
-        chat: 'Em di ngu day',
+        chat: 'Em đi ngủ đây',
         time: '27m'));
     listChat.add(ChatUser(
         name: 'Thu Trang',
         url: 'images/user5.jpg',
-        chat: 'Anh an com chua',
+        chat: 'Bún đậu ăn ngon vch',
         time: '46m'));
     listChat.add(ChatUser(
-        name: 'Khanh Van',
+        name: 'Khánh Vân',
         url: 'images/user6.jpg',
-        chat: 'May gio VN da',
-        time: '1h32m'));
+        chat: 'Khi nào Việt Nam đá nhỉ',
+        time: '1h39m'));
     listChat.add(ChatUser(
-        name: 'Thuy Trang',
+        name: 'Thùy Trang',
         url: 'images/user7.jpg',
-        chat: 'May gio VN da',
-        time: '1h32m'));
+        chat: 'Kante la cầu thủ Pháp',
+        time: '4h22m'));
     listChat.add(ChatUser(
-        name: 'Kim Ngan',
+        name: 'Kim Ngân',
         url: 'images/user9.jpg',
-        chat: 'May gio VN da',
-        time: '1h32m'));
+        chat: 'Chịu rồi',
+        time: 'Th 7'));
     listChat.add(ChatUser(
-        name: 'Khanh Van',
+        name: 'Kiều Mai',
         url: 'images/user1.jpg',
-        chat: 'May gio VN da',
-        time: '1h32m'));
+        chat: 'Máy bị làm sao ấyy',
+        time: 'Th 6'));
+    listChat.add(ChatUser(
+        name: 'Thùy Mỵ',
+        url: 'images/user1.jpg',
+        chat: 'Hỏng rồi. Không vào được nữa',
+        time: 'Th 5'));
+    listChat.add(ChatUser(
+        name: 'Yến Hoàng',
+        url: 'images/user2.jpg',
+        chat: 'Không biết bao giờ mới được lên Hà Nội',
+        time: 'Th 5'));
   }
 
   @override
@@ -82,58 +92,9 @@ class _MessScreen extends State<MessScreen> {
             SizedBox(
               height: 8,
             ),
-            Column(
-              children: [
-                ListView.builder(
-                    itemCount: listChat.length,
-                    itemBuilder: (context, index) {
-                      return Row(
-                        children: [
-                          Container(
-                            width: 56,
-                            height: 56,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                image: AssetImage(listChat[index].url),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                listChat[index].name,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 6,
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    listChat[index].chat,
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(listChat[index].time),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
-                      );
-                    })
-              ],
-            )
+            _buildSearch(),
+            SizedBox(height: 10,),
+            _buildChats(),
           ],
         ),
       ),
@@ -175,20 +136,85 @@ class _MessScreen extends State<MessScreen> {
   }
 
   Widget _buildSearch() {
-    return Container(
-      width: double.infinity,
-      height: 46,
-      decoration: BoxDecoration(
-        color: Colors.grey,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: TextField(
-        cursorColor: Colors.black,
-        decoration: InputDecoration(
-          hintText: "Search",
-          border: InputBorder.none,
-          prefixIcon: Icon(Icons.search),
+    return Padding(
+      padding: EdgeInsets.all(6),
+      child: Container(
+        width: double.infinity,
+        height: 46,
+        decoration: BoxDecoration(
+          color: Colors.grey,
+          borderRadius: BorderRadius.circular(20),
         ),
+        child: TextField(
+          cursorColor: Colors.black,
+          decoration: InputDecoration(
+            hintText: "Search",
+            border: InputBorder.none,
+            prefixIcon: Icon(Icons.search),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildChats(){
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          ListView.builder(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemCount: listChat.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            image: AssetImage(listChat[index].url),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            listChat[index].name,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 6,
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                listChat[index].chat,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(listChat[index].time),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                );
+              })
+        ],
       ),
     );
   }
